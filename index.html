@@ -304,59 +304,84 @@
             <h2 class="section-title">Interaktivní mapa plavby Titaniku</h2>
             <div class="map-container">
                 <div class="map-info">
-                    <h3>Trasa plavby</h3>
-                    <p>Projděte si celou trasu od Southamptonu až po místo katastrofy. Klikněte na body pro detailní informace.</p>
+                    <h3>Trasa plavby a pozice lodí</h3>
+                    <p>Projděte si celou trasu od Southamptonu až po místo katastrofy. Klikněte na body pro detailní informace o každé zastávce a pozici lodí.</p>
                 </div>
+                
+                <div class="map-controls">
+                    <button class="map-btn active" data-view="route">Trasa plavby</button>
+                    <button class="map-btn" data-view="positions">Pozice lodí</button>
+                    <button class="map-btn" data-view="californian">Californian</button>
+                </div>
+                
                 <div class="map-wrapper">
-                    <svg class="titanic-map" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="titanic-map" viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg">
                         <!-- Pozadí mapy -->
-                        <rect width="800" height="400" fill="#e8f4f8"/>
+                        <rect width="900" height="500" fill="#e8f4f8"/>
                         
                         <!-- Kontinenty -->
-                        <path d="M50,100 Q100,80 150,90 T250,100 L250,350 L50,350 Z" fill="#d4e6d4" stroke="#2d5a2d" stroke-width="2"/>
-                        <path d="M550,80 Q600,60 650,70 T750,80 L750,350 L550,350 Z" fill="#d4e6d4" stroke="#2d5a2d" stroke-width="2"/>
+                        <path d="M50,120 Q120,80 200,90 T300,120 L300,450 L50,450 Z" fill="#d4e6d4" stroke="#2d5a2d" stroke-width="2"/>
+                        <path d="M600,100 Q700,60 800,80 T850,100 L850,450 L600,450 Z" fill="#d4e6d4" stroke="#2d5a2d" stroke-width="2"/>
                         
                         <!-- Oceán -->
-                        <rect x="250" y="50" width="300" height="300" fill="#87ceeb" opacity="0.3"/>
+                        <rect x="300" y="60" width="300" height="380" fill="#87ceeb" opacity="0.2"/>
                         
                         <!-- Trasa plavby -->
-                        <path id="route" d="M100,200 Q200,180 300,190 T500,200 T700,220" 
-                              fill="none" stroke="#e74c3c" stroke-width="3" stroke-dasharray="5,5"/>
+                        <path id="route" d="M120,250 Q220,230 320,240 T520,250 T720,270" 
+                              fill="none" stroke="#e74c3c" stroke-width="4" stroke-dasharray="8,8"/>
                         
                         <!-- Zastávky -->
                         <g class="stop-points">
                             <!-- Southampton -->
-                            <circle cx="100" cy="200" r="8" fill="#e74c3c" class="stop-point" data-stop="southampton"/>
-                            <text x="100" y="190" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Southampton</text>
+                            <circle cx="120" cy="250" r="12" fill="#e74c3c" class="stop-point" data-stop="southampton"/>
+                            <text x="120" y="235" text-anchor="middle" fill="#2c3e50" font-size="14" font-weight="bold">Southampton</text>
                             
                             <!-- Cherbourg -->
-                            <circle cx="200" cy="190" r="6" fill="#f39c12" class="stop-point" data-stop="cherbourg"/>
-                            <text x="200" y="180" text-anchor="middle" fill="#2c3e50" font-size="10">Cherbourg</text>
+                            <circle cx="220" cy="230" r="10" fill="#f39c12" class="stop-point" data-stop="cherbourg"/>
+                            <text x="220" y="215" text-anchor="middle" fill="#2c3e50" font-size="12">Cherbourg</text>
                             
                             <!-- Queenstown -->
-                            <circle cx="300" cy="190" r="6" fill="#f39c12" class="stop-point" data-stop="queenstown"/>
-                            <text x="300" y="180" text-anchor="middle" fill="#2c3e50" font-size="10">Queenstown</text>
+                            <circle cx="320" cy="240" r="10" fill="#f39c12" class="stop-point" data-stop="queenstown"/>
+                            <text x="320" y="225" text-anchor="middle" fill="#2c3e50" font-size="12">Queenstown</text>
                             
                             <!-- Místo katastrofy -->
-                            <circle cx="500" cy="200" r="10" fill="#c0392b" class="stop-point" data-stop="disaster"/>
-                            <text x="500" y="190" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Katastrofa</text>
+                            <circle cx="520" cy="250" r="15" fill="#c0392b" class="stop-point" data-stop="disaster"/>
+                            <text x="520" y="235" text-anchor="middle" fill="#2c3e50" font-size="14" font-weight="bold">Katastrofa</text>
                             
                             <!-- New York -->
-                            <circle cx="700" cy="220" r="8" fill="#27ae60" class="stop-point" data-stop="newyork"/>
-                            <text x="700" y="210" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">New York</text>
+                            <circle cx="720" cy="270" r="12" fill="#27ae60" class="stop-point" data-stop="newyork"/>
+                            <text x="720" y="255" text-anchor="middle" fill="#2c3e50" font-size="14" font-weight="bold">New York</text>
                         </g>
                         
-                        <!-- Titanic loď -->
+                        <!-- Californian pozice -->
+                        <g class="californian-position" opacity="0.8">
+                            <circle cx="480" cy="180" r="12" fill="#8e44ad" class="stop-point" data-stop="californian"/>
+                            <text x="480" y="165" text-anchor="middle" fill="#8e44ad" font-size="12" font-weight="bold">Californian</text>
+                            <text x="480" y="200" text-anchor="middle" fill="#8e44ad" font-size="10">22:30 - zastaven</text>
+                        </g>
+                        
+                        <!-- Titanic loď - viditelná a animovaná -->
                         <g id="titanic-ship" class="ship-animation">
-                            <path d="M0,0 L20,0 L25,5 L25,15 L20,20 L0,20 L5,15 L5,5 Z" 
-                                  fill="#2c3e50" stroke="#34495e" stroke-width="1" transform="translate(100,195)"/>
-                            <circle cx="12.5" cy="10" r="3" fill="#3498db"/>
+                            <rect x="0" y="0" width="30" height="20" rx="5" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
+                            <rect x="5" y="5" width="20" height="10" fill="#3498db" rx="2"/>
+                            <circle cx="15" cy="10" r="3" fill="#e74c3c"/>
+                            <text x="15" y="25" text-anchor="middle" fill="#2c3e50" font-size="8" font-weight="bold">TITANIC</text>
                         </g>
                         
                         <!-- Ledovec -->
-                        <g class="iceberg" opacity="0.7">
-                            <path d="M480,180 L520,180 L510,200 L490,200 Z" fill="#bdc3c7" stroke="#95a5a6" stroke-width="1"/>
-                            <path d="M485,175 L515,175 L510,180 L490,180 Z" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1"/>
+                        <g class="iceberg" opacity="0.8">
+                            <path d="M500,200 L540,200 L530,220 L510,220 Z" fill="#bdc3c7" stroke="#95a5a6" stroke-width="2"/>
+                            <path d="M505,195 L535,195 L530,200 L510,200 Z" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="2"/>
+                            <text x="520" y="240" text-anchor="middle" fill="#95a5a6" font-size="10">Ledovec</text>
+                        </g>
+                        
+                        <!-- Časové značky -->
+                        <g class="time-markers">
+                            <text x="120" y="280" text-anchor="middle" fill="#e74c3c" font-size="10" font-weight="bold">10.4. 12:00</text>
+                            <text x="220" y="260" text-anchor="middle" fill="#f39c12" font-size="10">10.4. 18:30</text>
+                            <text x="320" y="270" text-anchor="middle" fill="#f39c12" font-size="10">11.4. 11:30</text>
+                            <text x="520" y="280" text-anchor="middle" fill="#c0392b" font-size="10" font-weight="bold">15.4. 02:20</text>
+                            <text x="720" y="300" text-anchor="middle" fill="#27ae60" font-size="10">16.4. plánováno</text>
                         </g>
                     </svg>
                 </div>
@@ -364,38 +389,51 @@
                 <!-- Informační panel -->
                 <div class="map-details">
                     <div class="detail-card active" data-stop="southampton">
-                        <h4>🚢 Southampton</h4>
+                        <h4>🚢 Southampton - Odjezd</h4>
                         <p><strong>Datum:</strong> 10. dubna 1912</p>
                         <p><strong>Čas:</strong> 12:00</p>
-                        <p><strong>Událost:</strong> Titanic vyplouvá na svou první plavbu s 2,224 cestujícími na palubě.</p>
+                        <p><strong>Událost:</strong> Titanic vyplouvá na svou první plavbu s 2,224 cestujícími na palubě. Kapitán Smith má v plánu odejít do důchodu po této plavbě.</p>
+                        <p><strong>Poznámka:</strong> Klíč od skříňky s dalekohledem byl zapomenut v Southamptonu.</p>
                     </div>
                     
                     <div class="detail-card" data-stop="cherbourg">
-                        <h4>🇫🇷 Cherbourg</h4>
+                        <h4>🇫🇷 Cherbourg - Francouzská zastávka</h4>
                         <p><strong>Datum:</strong> 10. dubna 1912</p>
                         <p><strong>Čas:</strong> 18:30</p>
-                        <p><strong>Událost:</strong> Krátká zastávka pro naložení dalších cestujících z Francie.</p>
+                        <p><strong>Událost:</strong> Krátká zastávka pro naložení dalších cestujících z Francie. Loď kotví mimo přístav kvůli své velikosti.</p>
+                        <p><strong>Poznámka:</strong> Naloženo 274 cestujících, včetně Johna Jacoba Astora IV.</p>
                     </div>
                     
                     <div class="detail-card" data-stop="queenstown">
-                        <h4>🇮🇪 Queenstown</h4>
+                        <h4>🇮🇪 Queenstown - Poslední evropská zastávka</h4>
                         <p><strong>Datum:</strong> 11. dubna 1912</p>
                         <p><strong>Čas:</strong> 11:30</p>
-                        <p><strong>Událost:</strong> Poslední evropská zastávka. Naložení pošty a posledních cestujících.</p>
+                        <p><strong>Událost:</strong> Poslední evropská zastávka. Naložení pošty a posledních cestujících. Titanic obdržel první varování o ledovcích.</p>
+                        <p><strong>Poznámka:</strong> Naloženo 123 cestujících a 1,385 pytlů pošty.</p>
+                    </div>
+                    
+                    <div class="detail-card" data-stop="californian">
+                        <h4>🚢 Californian - Kontroverzní loď</h4>
+                        <p><strong>Datum:</strong> 14. dubna 1912</p>
+                        <p><strong>Čas:</strong> 22:30</p>
+                        <p><strong>Událost:</strong> Californian se zastavil kvůli ledovcům. Viděl světla Titaniku a 8 raket, ale nezasáhl. Vzdálenost: 19-20 mil.</p>
+                        <p><strong>Poznámka:</strong> Kapitán Lord byl později suspendován z námořnictva.</p>
                     </div>
                     
                     <div class="detail-card" data-stop="disaster">
-                        <h4>❄️ Místo katastrofy</h4>
+                        <h4>❄️ Místo katastrofy - Ledovec</h4>
                         <p><strong>Datum:</strong> 15. dubna 1912</p>
                         <p><strong>Čas:</strong> 02:20</p>
-                        <p><strong>Událost:</strong> Titanic se potopil po nárazu do ledovce. Teplota vody -2°C.</p>
+                        <p><strong>Událost:</strong> Titanic se potopil po nárazu do ledovce. Teplota vody -2°C. Californian byl nejblíže, ale nezasáhl.</p>
+                        <p><strong>Poznámka:</strong> 1,517 obětí, 707 přeživších. Carpathia dorazila v 04:00.</p>
                     </div>
                     
                     <div class="detail-card" data-stop="newyork">
-                        <h4>🗽 New York</h4>
+                        <h4>🗽 New York - Nedosažený cíl</h4>
                         <p><strong>Datum:</strong> 15. dubna 1912</p>
                         <p><strong>Čas:</strong> Plánováno 16. dubna</p>
-                        <p><strong>Událost:</strong> Plánovaný cíl plavby, který Titanic nikdy nedosáhl.</p>
+                        <p><strong>Událost:</strong> Plánovaný cíl plavby, který Titanic nikdy nedosáhl. Carpathia přivezla přeživší do New Yorku 18. dubna.</p>
+                        <p><strong>Poznámka:</strong> 30,000 lidí čekalo na přístavních molách.</p>
                     </div>
                 </div>
             </div>

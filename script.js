@@ -324,13 +324,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Interaktivní mapa - GitHub Pages kompatibilní
+    // Interaktivní mapa - OPRAVENÁ a FUNKČNÍ
     function initMap() {
         const stopPoints = document.querySelectorAll('.stop-point');
         const detailCards = document.querySelectorAll('.detail-card');
+        const mapButtons = document.querySelectorAll('.map-btn');
         
         // Funkce pro aktivaci bodu
         function activateStop(stopId) {
+            console.log('Aktivuji bod:', stopId);
+            
             // Deaktivujeme všechny body
             stopPoints.forEach(point => {
                 point.classList.remove('active');
@@ -346,70 +349,138 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (selectedPoint) {
                 selectedPoint.classList.add('active');
+                console.log('Bod aktivován:', selectedPoint);
             }
             
             if (selectedCard) {
                 selectedCard.classList.add('active');
+                console.log('Karta aktivována:', selectedCard);
             }
         }
         
-        // Kliknutí na body mapy
+        // Kliknutí na body mapy - OPRAVENÉ
         stopPoints.forEach(point => {
-            point.addEventListener('click', function() {
+            point.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 const stopId = this.getAttribute('data-stop');
-                activateStop(stopId);
+                console.log('Kliknuto na bod:', stopId);
+                
+                if (stopId) {
+                    activateStop(stopId);
+                    
+                    // Scroll na kartu
+                    const targetCard = document.querySelector('.detail-card[data-stop="' + stopId + '"]');
+                    if (targetCard) {
+                        targetCard.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }
+                }
             });
         });
         
-        // Kliknutí na detail karty
+        // Kliknutí na detail karty - OPRAVENÉ
         detailCards.forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                
                 const stopId = this.getAttribute('data-stop');
-                activateStop(stopId);
+                console.log('Kliknuto na kartu:', stopId);
+                
+                if (stopId) {
+                    activateStop(stopId);
+                }
             });
         });
         
-        // Animace lodi po trase
+        // Map controls - nové funkce
+        mapButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const view = this.getAttribute('data-view');
+                
+                // Odstraníme aktivní třídu ze všech tlačítek
+                mapButtons.forEach(b => b.classList.remove('active'));
+                
+                // Aktivujeme vybrané tlačítko
+                this.classList.add('active');
+                
+                console.log('Změna pohledu na:', view);
+                
+                // Zde můžeme přidat logiku pro různé pohledy
+                if (view === 'californian') {
+                    activateStop('californian');
+                } else if (view === 'route') {
+                    activateStop('southampton');
+                }
+            });
+        });
+        
+        // Animace lodi po trase - OPRAVENÁ
         function animateShip() {
             const ship = document.getElementById('titanic-ship');
-            if (!ship) return;
+            if (!ship) {
+                console.log('Loď nenalezena');
+                return;
+            }
             
-            const route = document.getElementById('route');
-            if (!route) return;
+            console.log('Spouštím animaci lodi');
             
-            // Jednoduchá animace - pohyb lodi
-            let position = 0;
-            const interval = setInterval(function() {
-                position += 2;
-                if (position > 600) {
-                    position = 0;
+            // Výchozí pozice lodi
+            let currentPosition = 0;
+            const positions = [
+                { x: 120, y: 230, stop: 'southampton' },
+                { x: 220, y: 210, stop: 'cherbourg' },
+                { x: 320, y: 220, stop: 'queenstown' },
+                { x: 520, y: 230, stop: 'disaster' },
+                { x: 720, y: 250, stop: 'newyork' }
+            ];
+            
+            let currentIndex = 0;
+            
+            function moveShip() {
+                if (currentIndex >= positions.length) {
+                    currentIndex = 0;
                 }
                 
-                // Aktualizujeme pozici lodi
-                ship.style.transform = 'translate(' + (100 + position) + 'px, 195px)';
+                const pos = positions[currentIndex];
                 
-                // Aktivujeme příslušný bod podle pozice
-                if (position < 100) {
-                    activateStop('southampton');
-                } else if (position < 200) {
-                    activateStop('cherbourg');
-                } else if (position < 300) {
-                    activateStop('queenstown');
-                } else if (position < 500) {
-                    activateStop('disaster');
-                } else {
-                    activateStop('newyork');
-                }
-            }, 100);
+                // Plynulý pohyb lodi
+                ship.style.transition = 'transform 3s ease-in-out';
+                ship.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+                
+                // Aktivujeme příslušný bod
+                setTimeout(() => {
+                    activateStop(pos.stop);
+                }, 1500);
+                
+                currentIndex++;
+                
+                // Pokračujeme v animaci
+                setTimeout(moveShip, 4000);
+            }
+            
+            // Spustíme animaci
+            moveShip();
         }
         
-        // Spustíme animaci lodi
-        setTimeout(animateShip, 2000);
+        // Spustíme animaci lodi po načtení
+        setTimeout(animateShip, 3000);
+        
+        // Inicializace - aktivujeme první bod
+        setTimeout(() => {
+            activateStop('southampton');
+        }, 1000);
     }
     
-    // Inicializujeme mapu
+    // Inicializujeme mapu - OPRAVENÉ
     if (document.querySelector('.titanic-map')) {
+        console.log('Mapa nalezena, inicializuji...');
         initMap();
+    } else {
+        console.log('Mapa nenalezena');
     }
     
     // Animace pro hero sekci

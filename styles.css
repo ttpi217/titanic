@@ -854,7 +854,7 @@ body {
     transform: translateY(0);
 }
 
-/* Interaktivní mapa */
+/* Interaktivní mapa - OPRAVENÁ */
 .map-section {
     padding: 80px 0;
     background: #f8f9fa;
@@ -868,102 +868,197 @@ body {
 
 .map-info {
     text-align: center;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto 2rem;
 }
 
 .map-info h3 {
     color: #2c3e50;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.map-info p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+}
+
+/* Map controls */
+.map-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.map-btn {
+    padding: 12px 24px;
+    border: 2px solid #3498db;
+    background: white;
+    color: #3498db;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.map-btn:hover,
+.map-btn.active {
+    background: #3498db;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
 }
 
 .map-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 2rem;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .titanic-map {
     max-width: 100%;
     height: auto;
     background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     overflow: visible;
 }
 
+/* Stop points - OPRAVENÉ */
 .stop-point {
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .stop-point:hover {
-    r: 12;
-    fill: #e74c3c;
-}
-
-.stop-point.active {
-    r: 12;
+    r: 18;
     fill: #e74c3c;
     stroke: #c0392b;
     stroke-width: 3;
 }
 
-.ship-animation {
-    animation: shipFloat 4s ease-in-out infinite;
+.stop-point.active {
+    r: 18;
+    fill: #e74c3c;
+    stroke: #c0392b;
+    stroke-width: 4;
+    filter: drop-shadow(0 0 10px rgba(231, 76, 60, 0.5));
+}
+
+/* Californian pozice */
+.californian-position .stop-point {
+    fill: #8e44ad;
+}
+
+.californian-position .stop-point:hover,
+.californian-position .stop-point.active {
+    fill: #9b59b6;
+    stroke: #8e44ad;
+}
+
+/* Titanic loď - OPRAVENÁ a VIDITELNÁ */
+#titanic-ship {
+    transform: translate(120px, 230px);
+    animation: shipFloat 6s ease-in-out infinite;
 }
 
 @keyframes shipFloat {
-    0%, 100% { transform: translate(100px, 195px) translateY(0px); }
-    50% { transform: translate(100px, 195px) translateY(-3px); }
+    0%, 100% { transform: translate(120px, 230px) translateY(0px); }
+    50% { transform: translate(120px, 230px) translateY(-5px); }
 }
 
+/* Map details - OPRAVENÉ */
 .map-details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .detail-card {
     background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #3498db;
-    opacity: 0.7;
-    transition: all 0.3s ease;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #3498db;
+    opacity: 0.8;
+    transition: all 0.4s ease;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.detail-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(231, 76, 60, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.detail-card:hover::before {
+    opacity: 1;
 }
 
 .detail-card:hover {
     opacity: 1;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .detail-card.active {
     opacity: 1;
     border-left-color: #e74c3c;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
 }
 
 .detail-card h4 {
     color: #2c3e50;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    position: relative;
+    z-index: 1;
 }
 
 .detail-card p {
-    margin-bottom: 0.5rem;
-    line-height: 1.6;
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
 }
 
 .detail-card strong {
     color: #3498db;
+    font-weight: 600;
+}
+
+/* Responsive mapa */
+@media (max-width: 768px) {
+    .map-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .map-btn {
+        width: 200px;
+    }
+    
+    .titanic-map {
+        transform: scale(0.8);
+        transform-origin: center;
+    }
 }
 
 /* Californian specifické animace */
