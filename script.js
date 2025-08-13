@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Pozorujeme všechny karty
-    const cards = document.querySelectorAll('.secret-card, .conspiracy-card, .fact-card, .survivor-card, .gallery-item');
+    const cards = document.querySelectorAll('.secret-card, .conspiracy-card, .fact-card, .survivor-card, .californian-card, .gallery-item');
     cards.forEach(card => {
         card.classList.add('scroll-reveal');
         observer.observe(card);
@@ -301,6 +301,26 @@ document.addEventListener('DOMContentLoaded', function() {
         
         card.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Speciální efekty pro Californian karty
+    const californianCards = document.querySelectorAll('.californian-card');
+    californianCards.forEach(card => {
+        const icon = card.querySelector('.californian-icon i');
+        
+        card.addEventListener('mouseenter', function() {
+            if (icon) {
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+                icon.style.color = '#9b59b6';
+            }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            if (icon) {
+                icon.style.transform = 'scale(1) rotate(0deg)';
+                icon.style.color = '#8e44ad';
+            }
         });
     });
     
