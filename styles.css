@@ -795,6 +795,7 @@ body {
     .conspiracy-grid,
     .survivor-grid,
     .californian-grid,
+    .map-details,
     .gallery-grid {
         grid-template-columns: 1fr;
     }
@@ -836,6 +837,7 @@ body {
 .fact-card,
 .survivor-card,
 .californian-card,
+.detail-card,
 .gallery-item {
     animation: fadeInUp 0.6s ease forwards;
 }
@@ -850,6 +852,118 @@ body {
 .scroll-reveal.revealed {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Interaktivní mapa */
+.map-section {
+    padding: 80px 0;
+    background: #f8f9fa;
+}
+
+.map-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.map-info {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.map-info h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.map-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.titanic-map {
+    max-width: 100%;
+    height: auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+}
+
+.stop-point {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.stop-point:hover {
+    r: 12;
+    fill: #e74c3c;
+}
+
+.stop-point.active {
+    r: 12;
+    fill: #e74c3c;
+    stroke: #c0392b;
+    stroke-width: 3;
+}
+
+.ship-animation {
+    animation: shipFloat 4s ease-in-out infinite;
+}
+
+@keyframes shipFloat {
+    0%, 100% { transform: translate(100px, 195px) translateY(0px); }
+    50% { transform: translate(100px, 195px) translateY(-3px); }
+}
+
+.map-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.detail-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #3498db;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.detail-card:hover {
+    opacity: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.detail-card.active {
+    opacity: 1;
+    border-left-color: #e74c3c;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.detail-card h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.detail-card p {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.detail-card strong {
+    color: #3498db;
 }
 
 /* Californian specifické animace */
